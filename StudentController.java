@@ -1,0 +1,45 @@
+package com.example.studentapi.controller;
+
+import com.example.studentapi.model.student;
+import com.example.studentapi.service.StudentService;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+import java.util.List;
+
+@RestController
+@RequestMapping("/api/students")
+public class StudentController {
+
+    private final StudentService studentService;
+
+    public StudentController(StudentService studentService) {
+        this.studentService = studentService;
+    }
+
+    @GetMapping
+    public List<student> getAllStudents() {
+        return studentService.getAllStudents();
+    }
+
+    @GetMapping("/{id}")
+    public student getStudentById(@PathVariable Long id) {
+        return studentService.getStudentById(id);
+    }
+
+    @PostMapping
+    public student createStudent(@RequestBody student student) {
+        return studentService.createStudent(student);
+    }
+
+    @DeleteMapping("/{id}")
+    public String deleteStudent(@PathVariable Long id) {
+        studentService.deleteStudent(id);
+        return "Student deleted successfully";
+    }
+}
